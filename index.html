@@ -6,14 +6,15 @@
   <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
   <title>Bitte Seite nicht schließen</title>
   <style>
-    /* Reset básico para garantir consistência entre navegadores */
+    /* Reset básico */
     body {
       margin: 0;
       padding: 0;
       width: 100% !important;
       -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
-      background-color: #ffffff; /* Fundo Externo BRANCO */
+      /* Fundo geral #F7F9FA */
+      background-color: #F7F9FA;
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       color: #333333;
     }
@@ -24,24 +25,26 @@
       mso-table-rspace: 0pt;
     }
     
-    /* Configuração do Wrapper (Fundo Externo) */
+    /* Configuração do Wrapper */
     .wrapper {
       width: 100%;
       table-layout: fixed;
-      background-color: #ffffff; /* Fundo Externo BRANCO */
+      /* Fundo wrapper #F7F9FA */
+      background-color: #F7F9FA;
       padding-top: 40px;
-      padding-bottom: 40px;
+      padding-bottom: 20px;
     }
     
-    /* Configuração do Box Principal (Fundo Interno) */
+    /* Configuração do Box Principal */
     .main {
-      background-color: #F7F9FA; /* Fundo Interno #F7F9FA */
+      /* Fundo do cartão #F7F9FA */
+      background-color: #F7F9FA;
       margin: 0 auto;
       width: 100%;
-      max-width: 600px; /* Largura máxima para Desktop */
+      max-width: 600px;
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Sombra suave */
+      /* Sem sombra na primeira seção */
     }
     
     .hero {
@@ -54,41 +57,71 @@
       font-size: 24px;
       line-height: 1.3;
       font-weight: 700;
-      color: #d32f2f; /* Vermelho alerta */
+      color: #d32f2f;
     }
     
     .content {
       padding: 10px 40px 40px 40px;
-      font-size: 16px; /* Tamanho de fonte bom para leitura mobile */
+      font-size: 16px;
       line-height: 1.6;
       color: #444;
       text-align: center;
     }
     
-    /* --- RESPONSIVIDADE (Mobile e Tablet) --- */
+    /* --- ESTILOS DO HOTMART / OVERLAYS --- */
+    .hotmart-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 600px; /* Alinhado com o conteúdo de cima */
+      margin: 0 auto;   /* Centraliza o widget */
+    }
+
+    /* TAMPA TUDO por 2s */
+    .overlay-full {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      /* Cor #F7F9FA */
+      background: #F7F9FA;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    /* Caixa de cima pra baixo (35%) */
+    .overlay-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 35%;
+      /* Cor #F7F9FA */
+      background: #F7F9FA;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    /* Caixa de baixo pra cima (45%) */
+    .overlay-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 45%;
+      /* Cor #F7F9FA */
+      background: #F7F9FA;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    /* --- RESPONSIVIDADE --- */
     @media screen and (max-width: 600px) {
-      .wrapper {
-        padding-top: 20px;
-        padding-bottom: 20px;
-      }
-      
-      .main {
-        width: 94% !important; /* Ocupa 94% da tela em celulares */
-        max-width: 94% !important;
-      }
-      
-      .hero {
-        padding: 30px 20px 15px 20px !important; /* Reduz padding lateral */
-      }
-      
-      .hero h1 {
-        font-size: 20px !important; /* Ajusta tamanho do título */
-      }
-      
-      .content {
-        padding: 10px 20px 30px 20px !important; /* Mais espaço para texto */
-        font-size: 15px !important;
-      }
+      .wrapper { padding-top: 20px; padding-bottom: 20px; }
+      .main { width: 94% !important; max-width: 94% !important; }
+      .hero { padding: 30px 20px 15px 20px !important; }
+      .hero h1 { font-size: 20px !important; }
+      .content { padding: 10px 20px 30px 20px !important; font-size: 15px !important; }
     }
   </style>
 </head>
@@ -97,94 +130,45 @@
   <div class="wrapper">
     <center>
       <table class="main" role="presentation" cellpadding="0" cellspacing="0">
-        
         <tr>
           <td class="hero">
             <h1>Bitte schließen oder aktualisieren Sie diese Seite nicht</h1>
           </td>
         </tr>
-
         <tr>
           <td class="content">
-            <p>Um auf Ihr Produkt zuzugreifen, klicken Sie bitte auf den Button unten.</p>
-            </td>
+            <p>Ihr sicherer Zugang wurde erfolgreich generiert und ist nun bereit für Sie. Um nun sofort in Ihren geschützten Mitgliederbereich zu gelangen und mit der Anwendung Ihres Produkts zu starten, klicken Sie bitte jetzt einfach auf den Button unten.</p>
+          </td>
         </tr>
-
       </table>
     </center>
   </div>
 
+  <div class="hotmart-wrapper">
+
+    <div class="overlay-full" id="overlay-full"></div>
+
+    <div class="overlay-top"></div>
+    <div class="overlay-bottom"></div>
+
+    <div id="hotmart-sales-funnel"></div>
+
+  </div>
+
+  <script src="https://checkout.hotmart.com/lib/hotmart-checkout-elements.js"></script>
+  <script>
+    // Hotmart carrega normal (sem delay)
+    checkoutElements.init('salesFunnel').mount('#hotmart-sales-funnel');
+
+    // Remove a tampa total após 2.5s
+    setTimeout(function () {
+      const full = document.getElementById('overlay-full');
+      if (full) full.remove();
+    }, 2500);
+  </script>
+
 </body>
 </html>
-<style>
-.hotmart-wrapper {
-  position: relative;
-}
-
-/* TAMPA TUDO por 2s */
-.overlay-full {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  z-index: 20;
-  pointer-events: none;
-}
-
-/* Caixa branca de cima pra baixo (35%) */
-.overlay-top {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 35%;
-  background: #fff;
-  z-index: 10;
-  pointer-events: none;
-}
-
-/* Caixa branca de baixo pra cima (45%) */
-.overlay-bottom {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 45%;
-  background: #fff;
-  z-index: 10;
-  pointer-events: none;
-}
-</style>
-
-<div class="hotmart-wrapper">
-
-  <!-- tampa tudo inicialmente -->
-  <div class="overlay-full" id="overlay-full"></div>
-
-  <!-- caixas fixas -->
-  <div class="overlay-top"></div>
-  <div class="overlay-bottom"></div>
-
-  <!-- HOTMART - Sales Funnel Widget -->
-  <div id="hotmart-sales-funnel"></div>
-
-</div>
-
-<script src="https://checkout.hotmart.com/lib/hotmart-checkout-elements.js"></script>
-
-<script>
-  // Hotmart carrega normal (sem delay)
-  checkoutElements.init('salesFunnel').mount('#hotmart-sales-funnel');
-
-  // Remove a tampa total após 2s
-  setTimeout(function () {
-    const full = document.getElementById('overlay-full');
-    if (full) full.remove();
-  }, 2500);
-</script>
-          
 <!-- HOTMART - Sales Funnel Widget -->
 <!--- sales funnel container --->
 <div id="hotmart-sales-funnel"></div>
