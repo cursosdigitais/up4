@@ -50,6 +50,75 @@
           <p>Vielen Dank für Ihren Kauf! Unten finden Sie den Zugriff auf alle Inhalte, die in Ihrem Paket enthalten sind.</p>
           
           <p><strong>1️⃣ Hauptpaket:</strong></p>
+<style>
+.hotmart-wrapper {
+  position: relative;
+}
+
+/* TAMPA TUDO por 2s */
+.overlay-full {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  z-index: 20;
+  pointer-events: none;
+}
+
+/* Caixa branca de cima pra baixo (35%) */
+.overlay-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 35%;
+  background: #fff;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Caixa branca de baixo pra cima (45%) */
+.overlay-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 45%;
+  background: #fff;
+  z-index: 10;
+  pointer-events: none;
+}
+</style>
+
+<div class="hotmart-wrapper">
+
+  <!-- tampa tudo inicialmente -->
+  <div class="overlay-full" id="overlay-full"></div>
+
+  <!-- caixas fixas -->
+  <div class="overlay-top"></div>
+  <div class="overlay-bottom"></div>
+
+  <!-- HOTMART - Sales Funnel Widget -->
+  <div id="hotmart-sales-funnel"></div>
+
+</div>
+
+<script src="https://checkout.hotmart.com/lib/hotmart-checkout-elements.js"></script>
+
+<script>
+  // Hotmart carrega normal (sem delay)
+  checkoutElements.init('salesFunnel').mount('#hotmart-sales-funnel');
+
+  // Remove a tampa total após 2s
+  setTimeout(function () {
+    const full = document.getElementById('overlay-full');
+    if (full) full.remove();
+  }, 2500);
+</script>
+          
 <!-- HOTMART - Sales Funnel Widget -->
 <!--- sales funnel container --->
 <div id="hotmart-sales-funnel"></div>
